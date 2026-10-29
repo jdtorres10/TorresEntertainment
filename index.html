@@ -119,12 +119,33 @@ section[id] { scroll-margin-top: 76px; }
 .photo img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
 .photo figcaption { font-family: var(--font-label); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 10px; }
 
-.themes { display: grid; gap: 18px; }
-.themes-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
-.chips { display: flex; flex-wrap: wrap; gap: 10px; }
-.chip { font-family: var(--font-label); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 8px 14px; background: var(--navy); color: var(--white); border: 2px solid var(--navy); }
+.bingo-band { overflow-x: clip; }
+.themes { display: grid; gap: 30px; margin-top: 20px; }
+.themes-head { display: grid; justify-items: center; text-align: center; gap: 14px; }
+.themes-head h3 { font-size: clamp(2rem, 4.5vw, 3rem); text-shadow: 4px 4px 0 var(--navy); }
+.themes-head p { font-size: 1.1rem; max-width: 52ch; }
+.themes-head strong { color: var(--gold); font-weight: 700; }
+.themes-head .btn { margin-top: 6px; }
+/* Full-bleed genre ticker: two rows drifting in opposite directions */
+.marquee { width: 100vw; margin-left: calc(50% - 50vw); display: grid; gap: 12px; padding-block: 6px 10px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.marquee-row { overflow: hidden; }
+.marquee-track { display: flex; width: max-content; animation: marquee-left 90s linear infinite; }
+.marquee-row.right .marquee-track { animation-name: marquee-right; animation-duration: 100s; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.chip-set { display: flex; gap: 10px; padding-right: 10px; }
+@keyframes marquee-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes marquee-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.chip { flex-shrink: 0; white-space: nowrap; font-family: var(--font-label); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 9px 15px; background: var(--navy); color: var(--white); border: 2px solid var(--navy); }
 .chip:nth-child(3n) { background: var(--gold); color: var(--navy); }
 .chip:nth-child(4n) { background: var(--white); color: var(--navy); }
+/* Reduced motion: no ticker, just a wrapped list of every theme */
+@media (prefers-reduced-motion: reduce) {
+  .marquee { width: auto; margin-left: 0; -webkit-mask-image: none; mask-image: none; }
+  .marquee-track { width: auto; }
+  .chip-set { flex-wrap: wrap; padding-right: 0; }
+  .chip-set[aria-hidden] { display: none; }
+}
 
 
 /* ---------- Highlights ---------- */
@@ -211,7 +232,7 @@ footer .wrap { padding-block: 34px; display: flex; justify-content: space-betwee
   .hero .wrap { padding-block: 36px 44px; }
   .hero p { font-size: 1.05rem; }
   .hero .actions { flex-direction: column; align-items: stretch; gap: 14px; padding-right: 6px; }
-  .hero .actions .btn, .themes-head .btn { justify-content: center; }
+  .hero .actions .btn { justify-content: center; }
   .split { padding-block: 48px; }
   .split-grid { gap: 22px; margin-top: 24px; }
   .product { grid-template-columns: 84px 1fr; gap: 16px; padding: 18px; }
@@ -226,7 +247,9 @@ footer .wrap { padding-block: 34px; display: flex; justify-content: space-betwee
   .photos::-webkit-scrollbar { display: none; }
   .photo { scroll-snap-align: center; box-shadow: 6px 6px 0 var(--navy); }
   .photo:nth-child(n) { transform: none; }
-  .themes-head { flex-direction: column; align-items: stretch; }
+  .themes-head p { font-size: 1rem; }
+  .marquee-track { animation-duration: 70s; }
+  .marquee-row.right .marquee-track { animation-duration: 80s; }
   .chip { font-size: 0.72rem; padding: 7px 11px; }
   .reel-head h3 { font-size: 1.2rem; }
   .reel-ctrls button { width: 44px; height: 44px; }
@@ -346,26 +369,25 @@ footer .wrap { padding-block: 34px; display: flex; justify-content: space-betwee
         </figure>
       </div>
 
-      <div class="themes" style="margin-top: 20px">
+      <div class="themes">
         <div class="themes-head">
           <h3>Pick a theme night</h3>
+          <p>Choose from <strong>45+ genres and themes</strong>, from Motown to Bad Bunny. Have something else in mind? We can build a custom playlist for your crowd.</p>
           <a class="btn btn-gold" href="#book">Book a bingo night</a>
         </div>
-        <div class="chips">
-          <span class="chip">80s Essentials</span>
-          <span class="chip">90s Country</span>
-          <span class="chip">Motown</span>
-          <span class="chip">Boy Bands</span>
-          <span class="chip">Taylor Swift</span>
-          <span class="chip">Bad Bunny</span>
-          <span class="chip">Disney Hits</span>
-          <span class="chip">One Hit Wonders</span>
-          <span class="chip">Legendary Hair Bands</span>
-          <span class="chip">Southern Rap</span>
-          <span class="chip">Summer Jams</span>
-          <span class="chip">Super Bowl Headliners</span>
-          <span class="chip">Mexico Lindo</span>
-          <span class="chip">Breakup Songs</span>
+        <div class="marquee" aria-label="Some of our bingo themes">
+          <div class="marquee-row left">
+            <div class="marquee-track">
+              <div class="chip-set"><span class="chip">80s Essentials</span><span class="chip">90s Country</span><span class="chip">Motown</span><span class="chip">Boy Bands</span><span class="chip">Taylor Swift</span><span class="chip">Bad Bunny</span><span class="chip">Disney Hits</span><span class="chip">One Hit Wonders</span><span class="chip">Legendary Hair Bands</span><span class="chip">Southern Rap</span><span class="chip">Summer Jams</span><span class="chip">Super Bowl Headliners</span><span class="chip">Mexico Lindo</span><span class="chip">Breakup Songs</span><span class="chip">Classic Rock</span><span class="chip">90s R&amp;B</span><span class="chip">British Invasion</span><span class="chip">Michael Jackson</span><span class="chip">Girl Gang</span><span class="chip">Love Songs</span><span class="chip">Latin Hits</span><span class="chip">Queen</span><span class="chip">Movie Music</span><span class="chip">Sing Along</span><span class="chip">Car Songs</span><span class="chip">Drinking Songs</span></div>
+              <div class="chip-set" aria-hidden="true"><span class="chip">80s Essentials</span><span class="chip">90s Country</span><span class="chip">Motown</span><span class="chip">Boy Bands</span><span class="chip">Taylor Swift</span><span class="chip">Bad Bunny</span><span class="chip">Disney Hits</span><span class="chip">One Hit Wonders</span><span class="chip">Legendary Hair Bands</span><span class="chip">Southern Rap</span><span class="chip">Summer Jams</span><span class="chip">Super Bowl Headliners</span><span class="chip">Mexico Lindo</span><span class="chip">Breakup Songs</span><span class="chip">Classic Rock</span><span class="chip">90s R&amp;B</span><span class="chip">British Invasion</span><span class="chip">Michael Jackson</span><span class="chip">Girl Gang</span><span class="chip">Love Songs</span><span class="chip">Latin Hits</span><span class="chip">Queen</span><span class="chip">Movie Music</span><span class="chip">Sing Along</span><span class="chip">Car Songs</span><span class="chip">Drinking Songs</span></div>
+            </div>
+          </div>
+          <div class="marquee-row right">
+            <div class="marquee-track">
+              <div class="chip-set"><span class="chip">2000s Country</span><span class="chip">2000s Alternative</span><span class="chip">2010s EDM</span><span class="chip">2010s Dance</span><span class="chip">2010s Country</span><span class="chip">Punk &amp; Alt</span><span class="chip">East Coast vs West Coast</span><span class="chip">Bruno Mars</span><span class="chip">Justin Timberlake</span><span class="chip">Kanye</span><span class="chip">Duets</span><span class="chip">Covers</span><span class="chip">Sampled</span><span class="chip">Animal Kingdom</span><span class="chip">Colors</span><span class="chip">Weather</span><span class="chip">Food</span><span class="chip">Money</span><span class="chip">Places</span><span class="chip">Body</span><span class="chip">My Name Is</span><span class="chip">Acronyms</span><span class="chip">All in the Family</span><span class="chip">Mommy</span><span class="chip">July 4th</span><span class="chip">World Cup</span><span class="chip">Canada</span><span class="chip">All American</span><span class="chip">R.I.P. Legends</span></div>
+              <div class="chip-set" aria-hidden="true"><span class="chip">2000s Country</span><span class="chip">2000s Alternative</span><span class="chip">2010s EDM</span><span class="chip">2010s Dance</span><span class="chip">2010s Country</span><span class="chip">Punk &amp; Alt</span><span class="chip">East Coast vs West Coast</span><span class="chip">Bruno Mars</span><span class="chip">Justin Timberlake</span><span class="chip">Kanye</span><span class="chip">Duets</span><span class="chip">Covers</span><span class="chip">Sampled</span><span class="chip">Animal Kingdom</span><span class="chip">Colors</span><span class="chip">Weather</span><span class="chip">Food</span><span class="chip">Money</span><span class="chip">Places</span><span class="chip">Body</span><span class="chip">My Name Is</span><span class="chip">Acronyms</span><span class="chip">All in the Family</span><span class="chip">Mommy</span><span class="chip">July 4th</span><span class="chip">World Cup</span><span class="chip">Canada</span><span class="chip">All American</span><span class="chip">R.I.P. Legends</span></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
