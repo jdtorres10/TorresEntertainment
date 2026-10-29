@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Torres Entertainment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo:wght@400;500;700&display=swap">
+<style>
+/* Layout: marquee-sign hero on gold, then two full-bleed product bands (red-led Music Bingo, blue-led Highlights), booking strip, footer. */
+:root {
+  --navy: #012d62;
+  --navy-deep: #00214a;
+  --gold: #fdbb30;
+  --red: #ee3825;
+  --blue: #007ac1;
+  --white: #ffffff;
+  --ink-soft: #c9d6e8;
+  --font-display: "Anton", "Impact", "Arial Narrow Bold", sans-serif;
+  --font-label: "Archivo Black", "Arial Black", sans-serif;
+  --font-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --gutter: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body { margin: 0; background: var(--navy); color: var(--white); font-family: var(--font-body); font-size: 17px; line-height: 1.6; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter-r); }
+.wrap > * { min-width: 0; }
+.eyebrow { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.28em; font-size: 0.82rem; color: var(--gold); margin: 0; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; line-height: 0.95; margin: 0; text-wrap: balance; letter-spacing: 0.01em; }
+h2 { font-size: clamp(2.8rem, 7vw, 5.2rem); }
+h3 { font-size: 1.7rem; }
+p { margin: 0; max-width: 62ch; }
+
+/* Stacked offset shadow lifted from the logos */
+.shadow-red { text-shadow: 4px 4px 0 var(--red); }
+.shadow-blue { text-shadow: 4px 4px 0 var(--blue); }
+
+.btn { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.92rem; text-decoration: none; padding: 14px 22px; border: 3px solid var(--navy); transition: transform .15s ease, box-shadow .15s ease; }
+.btn:hover { transform: translate(-2px, -2px); }
+.btn-red { background: var(--red); color: var(--white); box-shadow: 5px 5px 0 var(--navy); }
+.btn-red:hover { box-shadow: 7px 7px 0 var(--navy); }
+.btn-blue { background: var(--blue); color: var(--white); box-shadow: 5px 5px 0 var(--navy); }
+.btn-blue:hover { box-shadow: 7px 7px 0 var(--navy); }
+.btn-gold { background: var(--gold); color: var(--navy); border-color: var(--gold); box-shadow: 5px 5px 0 var(--red); }
+
+/* ---------- Header ---------- */
+.site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--navy); border-bottom: 4px solid var(--gold); }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; flex-wrap: wrap; }
+.brand { display: flex; flex-direction: column; text-decoration: none; line-height: 1; }
+.brand b { font-family: var(--font-display); font-weight: 400; font-size: 1.9rem; letter-spacing: 0.03em; text-shadow: 3px 3px 0 var(--red); }
+.brand span { font-family: var(--font-label); font-size: 0.62rem; letter-spacing: 0.36em; color: var(--gold); margin-top: 4px; }
+.nav { display: flex; gap: 6px 22px; flex-wrap: wrap; align-items: center; }
+.nav a { font-family: var(--font-label); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; text-decoration: none; padding: 6px 0; border-bottom: 3px solid transparent; }
+.nav a:hover { border-color: var(--gold); }
+.nav a.cta { background: var(--red); padding: 8px 14px; border: 0; }
+
+/* ---------- Hero ---------- */
+.hero { background: var(--gold); color: var(--navy); overflow: hidden; }
+.hero .wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; padding-block: 64px 72px; }
+.hero h1 { font-size: clamp(3rem, 7.4vw, 6rem); color: var(--navy); }
+.hero h1 em { font-style: normal; color: var(--red); }
+.hero p { font-size: 1.15rem; font-weight: 500; margin-top: 20px; }
+.hero .actions { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 30px; }
+.hero-logo { transform: rotate(-3deg); filter: drop-shadow(0 18px 30px rgba(1,45,98,.25)); }
+.hero-logo img { width: 100%; }
+
+/* Marquee bulb strip */
+.bulbs { height: 18px; background: radial-gradient(circle, var(--gold) 3.5px, transparent 4px) 0 50% / 22px 18px repeat-x, var(--navy); }
+
+/* ---------- Product split ---------- */
+.split { padding-block: 72px; }
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 36px; }
+.product { position: relative; display: grid; grid-template-columns: 150px 1fr; gap: 22px; align-items: center; padding: 26px; background: var(--navy-deep); border: 3px solid var(--white); text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
+.product.bingo { box-shadow: 10px 10px 0 var(--red); }
+.product.hl { box-shadow: 10px 10px 0 var(--blue); }
+.product:hover { transform: translate(-3px, -3px); }
+.product img { width: 150px; aspect-ratio: 801 / 924; object-fit: cover; }
+.product div { min-width: 0; display: grid; gap: 10px; }
+.product p { color: var(--ink-soft); font-size: 0.98rem; }
+.product .go { font-family: var(--font-label); font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+
+/* ---------- Music Bingo ---------- */
+.bingo-band { background: var(--red); position: relative; }
+.bingo-band .wrap { padding-block: 84px; display: grid; gap: 56px; }
+.bingo-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; }
+.bingo-intro h2 { text-shadow: 5px 5px 0 var(--navy); }
+.bingo-intro .eyebrow { color: var(--gold); margin-bottom: 14px; }
+.bingo-intro p { font-size: 1.1rem; }
+
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 3px solid var(--navy); background: var(--navy); }
+.step { padding: 26px; display: grid; gap: 10px; align-content: start; border-right: 3px solid var(--red); }
+.step:last-child { border-right: 0; }
+.step .num { font-family: var(--font-display); font-size: 3rem; color: var(--gold); line-height: 1; }
+.step p { color: var(--ink-soft); font-size: 0.98rem; }
+
+/* Photo wall: three polaroids */
+.photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; align-items: start; }
+.photo { margin: 0; background: var(--white); padding: 12px 12px 14px; color: var(--navy); box-shadow: 8px 8px 0 var(--navy); transition: transform .2s ease; }
+.photo:nth-child(1) { transform: rotate(-2.5deg); }
+.photo:nth-child(2) { transform: rotate(1.5deg) translateY(28px); }
+.photo:nth-child(3) { transform: rotate(-1deg); }
+.photo:hover { transform: rotate(0) scale(1.02); }
+.photo img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.photo figcaption { font-family: var(--font-label); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 10px; }
+
+.themes { display: grid; gap: 18px; }
+.themes-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { font-family: var(--font-label); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 8px 14px; background: var(--navy); color: var(--white); border: 2px solid var(--navy); }
+.chip:nth-child(3n) { background: var(--gold); color: var(--navy); }
+.chip:nth-child(4n) { background: var(--white); color: var(--navy); }
+
+
+/* ---------- Highlights ---------- */
+.hl-band { background: var(--navy); border-top: 18px solid var(--blue); }
+.hl-band .wrap { padding-block: 84px; display: grid; gap: 40px; }
+.hl-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; }
+.hl-intro .eyebrow { margin-bottom: 14px; }
+.hl-intro p { color: var(--ink-soft); font-size: 1.1rem; }
+
+.reel-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.reel-head h3 { font-size: 1.5rem; }
+.reel-ctrls { display: flex; gap: 10px; }
+.reel-ctrls button { width: 50px; height: 50px; border: 3px solid var(--white); background: transparent; color: var(--white); font-size: 1.3rem; cursor: pointer; font-family: var(--font-label); transition: background .15s ease; }
+.reel-ctrls button:hover { background: var(--blue); }
+.reel-ctrls button:disabled { opacity: .35; cursor: default; background: transparent; }
+
+.reel { display: grid; grid-auto-flow: column; grid-auto-columns: min(78%, 620px); gap: 26px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 4px 26px; scrollbar-width: thin; scrollbar-color: var(--blue) transparent; }
+.tile { scroll-snap-align: start; display: grid; gap: 14px; }
+.tile .frame { position: relative; aspect-ratio: 16 / 9; background: #000; border: 3px solid var(--white); box-shadow: 10px 10px 0 var(--blue); }
+.tile:nth-child(2) .frame { box-shadow: 10px 10px 0 var(--red); }
+.tile:nth-child(3) .frame { box-shadow: 10px 10px 0 var(--gold); }
+.tile iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.tile .meta { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.tile .meta b { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.9rem; }
+.tile .meta a { font-size: 0.85rem; color: var(--gold); }
+
+.offer { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+.offer div { border-top: 4px solid var(--blue); padding-top: 14px; display: grid; gap: 8px; }
+.offer p { color: var(--ink-soft); font-size: 0.98rem; }
+
+/* ---------- Book ---------- */
+.book { background: var(--gold); color: var(--navy); }
+.book .wrap { padding-block: 72px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+.book h2 { color: var(--navy); text-shadow: 5px 5px 0 var(--white); }
+.book p { margin-top: 18px; font-weight: 500; }
+form { display: grid; gap: 14px; background: var(--navy); color: var(--white); padding: 26px; box-shadow: 10px 10px 0 var(--red); }
+label { font-family: var(--font-label); font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; display: grid; gap: 6px; }
+input, select, textarea { font: inherit; font-family: var(--font-body); font-size: 1rem; padding: 12px; border: 2px solid var(--white); background: var(--navy-deep); color: var(--white); width: 100%; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-note { font-size: 0.85rem; color: var(--gold); min-height: 1.2em; }
+
+/* ---------- Footer ---------- */
+footer { background: var(--navy-deep); }
+footer .wrap { padding-block: 34px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; color: var(--ink-soft); font-size: 0.9rem; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 880px) {
+  .hero .wrap, .bingo-intro, .hl-intro, .book .wrap, .split-grid { grid-template-columns: 1fr; }
+  .hero-logo { max-width: 520px; }
+  .steps { grid-template-columns: 1fr; }
+  .step { border-right: 0; border-bottom: 3px solid var(--red); }
+  .step:last-child { border-bottom: 0; }
+  .offer { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .photos { grid-template-columns: 1fr; max-width: 360px; }
+  .photo:nth-child(2) { transform: rotate(1.5deg); }
+  .product { grid-template-columns: 1fr; }
+  .product img { width: 120px; }
+  .reel { grid-auto-columns: 88%; }
+  .form-row { grid-template-columns: 1fr; }
+  .nav { gap: 4px 14px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top"><b>TORRES</b><span>ENTERTAINMENT</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#music-bingo">Music Bingo</a>
+      <a href="#highlights">Highlights</a>
+      <a class="cta" href="#book">Book Us</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow" style="color: var(--red)">Music Bingo &bull; Sports Highlights</p>
+        <h1 style="margin-top:14px">Bring the <em>noise</em> to your night.</h1>
+        <p>Torres Entertainment runs live Music Bingo nights for restaurants and bars, and films high school sports highlights across Hampton Roads.</p>
+        <div class="actions">
+          <a class="btn btn-red" href="#music-bingo">Play Music Bingo</a>
+          <a class="btn btn-blue" href="#highlights">Watch Highlights</a>
+        </div>
+      </div>
+      <div class="hero-logo">
+        <img src="img/torres-entertainment-logo.png" alt="Torres Entertainment logo: Music Bingo and Sports Highlights">
+      </div>
+    </div>
+  </section>
+  <div class="bulbs" aria-hidden="true"></div>
+
+  <section class="split">
+    <div class="wrap">
+      <p class="eyebrow">Two ways to have fun</p>
+      <div class="split-grid">
+        <a class="product bingo" href="#music-bingo">
+          <img src="img/music-bingo-logo.png" alt="Torres Music Bingo logo">
+          <div>
+            <h3 class="shadow-red">Torres Music Bingo</h3>
+            <p>A hosted game night: themed playlists, printed cards, a live DJ and a champion's chain for the winner.</p>
+            <span class="go">See how it works &rarr;</span>
+          </div>
+        </a>
+        <a class="product hl" href="#highlights">
+          <img src="img/highlights-logo.png" alt="Torres Highlights logo">
+          <div>
+            <h3 class="shadow-blue">Torres Highlights</h3>
+            <p>High school game highlights from around Hampton Roads, cut to music and ready to share.</p>
+            <span class="go">Watch the reels &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MUSIC BINGO ===== -->
+  <section class="bingo-band" id="music-bingo">
+    <div class="wrap">
+      <div class="bingo-intro">
+        <div>
+          <p class="eyebrow">Torres Music Bingo</p>
+          <h2>Hear it. Mark it. Shout Bingo.</h2>
+        </div>
+        <p>Instead of numbers, we play songs. Every player gets a card full of song titles and artists. Hear a song on your card, mark it. Five in a row wins, and the night's champion leaves wearing the gold chain.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <span class="num">1</span>
+          <h3>Grab a card</h3>
+          <p>Every game prints 50 unique cards, so no two players have the same board.</p>
+        </div>
+        <div class="step">
+          <span class="num">2</span>
+          <h3>Listen up</h3>
+          <p>The host spins short clips from a themed playlist. Name that tune, then find it on your card.</p>
+        </div>
+        <div class="step">
+          <span class="num">3</span>
+          <h3>Claim the chain</h3>
+          <p>First full line wins the round. The night's champion takes home the medal and the bragging rights.</p>
+        </div>
+      </div>
+
+      <div class="photos">
+        <figure class="photo">
+          <img src="img/bingo-champion.jpg" alt="A Music Bingo champion wearing the gold chain and medal, with the host holding the winning card">
+          <figcaption>Movie Music Bingo champ</figcaption>
+        </figure>
+        <figure class="photo">
+          <img src="img/bingo-host-booth.jpg" alt="The Torres Music Bingo host at the DJ table with microphone and speaker">
+          <figcaption>Live from the host table</figcaption>
+        </figure>
+        <figure class="photo">
+          <img src="img/bingo-winner-medal.jpg" alt="A winner holding the Music Bingo champion medal next to the host with her winning card">
+          <figcaption>Mommy Music Bingo winner</figcaption>
+        </figure>
+      </div>
+
+      <div class="themes" style="margin-top: 20px">
+        <div class="themes-head">
+          <h3>Pick a theme night</h3>
+          <a class="btn btn-gold" href="#book">Book a bingo night</a>
+        </div>
+        <div class="chips">
+          <span class="chip">80s Essentials</span>
+          <span class="chip">90s Country</span>
+          <span class="chip">Motown</span>
+          <span class="chip">Boy Bands</span>
+          <span class="chip">Taylor Swift</span>
+          <span class="chip">Bad Bunny</span>
+          <span class="chip">Disney Hits</span>
+          <span class="chip">One Hit Wonders</span>
+          <span class="chip">Legendary Hair Bands</span>
+          <span class="chip">Southern Rap</span>
+          <span class="chip">Summer Jams</span>
+          <span class="chip">Super Bowl Headliners</span>
+          <span class="chip">Mexico Lindo</span>
+          <span class="chip">Breakup Songs</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HIGHLIGHTS ===== -->
+  <section class="hl-band" id="highlights">
+    <div class="wrap">
+      <div class="hl-intro">
+        <div>
+          <p class="eyebrow">Torres Highlights</p>
+          <h2 class="shadow-blue">Friday night, replayed.</h2>
+        </div>
+        <p>We film Hampton Roads high school games, from soccer to volleyball to basketball, and cut them into highlight videos you can share. Every goal, kill and buzzer-beater, ready for the team, the parents and the group chat. Watch them all on our YouTube channel, <strong>Hampton Roads Highlights</strong>.</p>
+      </div>
+
+      <div>
+        <div class="reel-head">
+          <h3>Recent reels from Hampton Roads Highlights</h3>
+          <div class="reel-ctrls">
+            <button type="button" id="reel-prev" aria-label="Previous video">&larr;</button>
+            <button type="button" id="reel-next" aria-label="Next video">&rarr;</button>
+          </div>
+        </div>
+        <div class="reel" id="reel" tabindex="0" aria-label="Highlight videos, scroll horizontally">
+          <article class="tile">
+            <div class="frame">
+              <iframe src="https://www.youtube-nocookie.com/embed/DvAN7kKZr_8?rel=0" title="Grafton HS vs Tabb HS Varsity Soccer Highlights" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="meta"><b>Grafton vs Tabb &middot; Varsity Soccer</b><a href="https://youtu.be/DvAN7kKZr_8" target="_blank" rel="noopener">Watch on YouTube</a></div>
+          </article>
+          <article class="tile">
+            <div class="frame">
+              <iframe src="https://www.youtube-nocookie.com/embed/y6UoFATzLcs?rel=0" title="Grafton vs New Kent Varsity Volleyball" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="meta"><b>Grafton vs New Kent &middot; Varsity Volleyball</b><a href="https://youtu.be/y6UoFATzLcs" target="_blank" rel="noopener">Watch on YouTube</a></div>
+          </article>
+          <article class="tile">
+            <div class="frame">
+              <iframe src="https://www.youtube-nocookie.com/embed/4xNfV28juJc?rel=0" title="Grafton HS vs Tabb HS Basketball Highlights" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="meta"><b>Grafton vs Tabb &middot; Basketball</b><a href="https://youtu.be/4xNfV28juJc" target="_blank" rel="noopener">Watch on YouTube</a></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="offer">
+        <div><h3>Game highlights</h3><p>The key plays from one game, cut to music and posted for the whole team.</p></div>
+        <div><h3>Player reels</h3><p>A recruiting cut built around one athlete's best moments.</p></div>
+        <div><h3>Season recaps</h3><p>The year's best plays for banquets, socials and senior nights.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BOOK ===== -->
+  <section class="book" id="book">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow" style="color: var(--red)">Let's talk</p>
+        <h2 style="margin-top:14px">Book a night or a reel.</h2>
+        <p>Tell us what you have in mind and we'll get back to you with dates, themes and pricing.</p>
+      </div>
+      <form id="book-form">
+        <div class="form-row">
+          <label for="f-name">Name<input id="f-name" type="text" placeholder="Your name"></label>
+          <label for="f-email">Email<input id="f-email" type="email" placeholder="you@example.com"></label>
+        </div>
+        <label for="f-service">I'm interested in
+          <select id="f-service">
+            <option>Music Bingo night</option>
+            <option>Sports highlight video</option>
+            <option>Both</option>
+          </select>
+        </label>
+        <label for="f-msg">Details<textarea id="f-msg" rows="4" placeholder="Venue, date, sport, theme ideas..."></textarea></label>
+        <button class="btn btn-red" type="submit" style="justify-self:start; border-color: var(--white); box-shadow: 5px 5px 0 var(--gold)">Send request</button>
+        <p class="form-note" id="form-note" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Torres Entertainment</span>
+    <span>Music Bingo &bull; Sports Highlights</span>
+  </div>
+</footer>
+
+<script>
+  const reel = document.getElementById('reel');
+  const prev = document.getElementById('reel-prev');
+  const next = document.getElementById('reel-next');
+  const step = () => reel.querySelector('.tile').getBoundingClientRect().width + 26;
+  prev.addEventListener('click', () => reel.scrollBy({ left: -step(), behavior: 'smooth' }));
+  next.addEventListener('click', () => reel.scrollBy({ left: step(), behavior: 'smooth' }));
+  const sync = () => {
+    prev.disabled = reel.scrollLeft < 4;
+    next.disabled = reel.scrollLeft + reel.clientWidth > reel.scrollWidth - 4;
+  };
+  reel.addEventListener('scroll', sync, { passive: true });
+  window.addEventListener('resize', sync);
+  sync();
+
+  document.getElementById('book-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    document.getElementById('form-note').textContent = 'Mock-up only: this form is not connected yet.';
+  });
+</script>
+</body>
+</html>
