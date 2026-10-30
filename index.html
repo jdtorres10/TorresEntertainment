@@ -179,8 +179,8 @@ section[id] { scroll-margin-top: 76px; }
 
 /* ---------- Book ---------- */
 .book { background: var(--gold); color: var(--navy); }
-.book .wrap { padding-block: 72px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
-.book h2 { color: var(--navy); text-shadow: 5px 5px 0 var(--white); }
+.book .wrap { padding-block: 72px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.book h2 { color: var(--navy); text-shadow: 5px 5px 0 var(--white); font-size: clamp(2.6rem, 5vw, 4.4rem); }
 .book p { margin-top: 18px; font-weight: 500; }
 .contact { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 14px; }
 .contact li { display: grid; gap: 2px; }
@@ -466,7 +466,7 @@ footer .wrap { padding-block: 34px; display: flex; justify-content: space-betwee
     <div class="wrap">
       <div class="book-intro">
         <p class="eyebrow" style="color: var(--red)">Let's talk</p>
-        <h2 style="margin-top:14px">Book a night or a reel.</h2>
+        <h2 style="margin-top:14px">Book your Bingo Night or Highlight Reel</h2>
         <p>Tap our email address and pick what you'd like to book. Your email app opens with a short request already started, so you only fill in the details.</p>
         <ul class="contact">
           <li><span>Call or text</span><a href="tel:+19567860575">(956) 786-0575</a></li>
@@ -547,7 +547,7 @@ footer .wrap { padding-block: 34px; display: flex; justify-content: space-betwee
     choices.hidden = !open;
     hint.hidden = open;
     emailBtn.setAttribute('aria-expanded', open);
-    if (open) choices.querySelector('.choice').focus({ preventScroll: true });
+    if (open && e.detail === 0) choices.querySelector('.choice').focus({ preventScroll: true });
   });
 </script>
 </body>
