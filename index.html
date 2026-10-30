@@ -29,6 +29,7 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
 body { margin: 0; background: var(--navy); color: var(--white); font-family: var(--font-body); font-size: 17px; line-height: 1.6; }
 img { max-width: 100%; display: block; }
+[hidden] { display: none !important; }
 a { color: inherit; }
 :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 
@@ -181,16 +182,28 @@ section[id] { scroll-margin-top: 76px; }
 .book .wrap { padding-block: 72px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
 .book h2 { color: var(--navy); text-shadow: 5px 5px 0 var(--white); }
 .book p { margin-top: 18px; font-weight: 500; }
-form { display: grid; gap: 14px; background: var(--navy); color: var(--white); padding: 26px; box-shadow: 10px 10px 0 var(--red); }
-label { font-family: var(--font-label); font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; display: grid; gap: 6px; }
-input, select, textarea { font: inherit; font-family: var(--font-body); font-size: 1rem; padding: 12px; border: 2px solid var(--white); background: var(--navy-deep); color: var(--white); width: 100%; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.form-note { font-size: 0.85rem; color: var(--gold); min-height: 1.2em; }
 .contact { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 14px; }
 .contact li { display: grid; gap: 2px; }
 .contact span { font-family: var(--font-label); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); }
 .contact a, .contact b { font-family: var(--font-label); font-size: 1.15rem; color: var(--navy); text-decoration: none; overflow-wrap: anywhere; }
 .contact a:hover { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 4px; }
+.email-card { display: grid; gap: 14px; align-content: start; background: var(--navy); color: var(--white); padding: 30px; box-shadow: 10px 10px 0 var(--red); }
+.email-label { font-family: var(--font-label); font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); }
+.email-line { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.point { font-size: 2.2rem; line-height: 1; flex-shrink: 0; animation: nudge 1.4s ease-in-out infinite; }
+@keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(8px); } }
+.email-btn { min-width: 0; font-family: var(--font-label); font-size: clamp(1.05rem, 2.6vw, 1.45rem); color: var(--white); text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 3px; text-underline-offset: 6px; overflow-wrap: anywhere; }
+.email-btn:hover, .email-btn[aria-expanded="true"] { color: var(--gold); }
+.email-hint { font-size: 0.9rem; color: var(--ink-soft); }
+.email-choices { display: grid; gap: 12px; padding-top: 16px; border-top: 2px solid rgba(255,255,255,.15); }
+.choices-title { font-family: var(--font-label); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.choice { display: grid; gap: 4px; padding: 16px 18px; text-decoration: none; color: var(--white); border: 2px solid var(--white); transition: transform .15s ease; }
+.choice:hover { transform: translate(-2px, -2px); }
+.choice.bingo { background: var(--red); box-shadow: 5px 5px 0 var(--gold); }
+.choice.hl { background: var(--blue); box-shadow: 5px 5px 0 var(--gold); }
+.choice b { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.95rem; }
+.choice span { font-size: 0.9rem; }
+.choice-plain { font-size: 0.9rem; color: var(--gold); justify-self: start; margin-top: 4px; }
 .socials { display: flex; gap: 12px; margin-top: 24px; }
 .socials a { width: 46px; height: 46px; display: grid; place-items: center; background: var(--navy); color: var(--gold); box-shadow: 4px 4px 0 var(--red); transition: transform .15s ease; }
 .socials a:hover { transform: translate(-2px, -2px); }
@@ -256,11 +269,17 @@ footer .wrap { padding-block: 34px; display: flex; justify-content: space-betwee
   .reel { grid-auto-columns: 88%; gap: 18px; }
   .tile .frame { --sh: 6px; }
   .tile .meta { flex-direction: column; gap: 2px; }
+  .email-card { padding: 22px; box-shadow: 6px 6px 0 var(--red); }
+  /* On phones, put the email card right under the "tap our email" text */
+  .book .wrap { gap: 0; }
+  .book-intro { display: contents; }
+  .book-intro > * { order: 0; }
+  .book .email-card { order: 1; margin-top: 24px; }
+  .book .contact { order: 2; }
+  .book .socials { order: 3; }
+  .point { font-size: 1.8rem; }
   .offer { grid-template-columns: 1fr; gap: 20px; }
   .book .wrap { padding-block: 52px; }
-  form { padding: 20px; box-shadow: 6px 6px 0 var(--red); }
-  .form-row { grid-template-columns: 1fr; }
-  form .btn { justify-self: stretch !important; justify-content: center; }
   footer .wrap { flex-direction: column; gap: 6px; }
 }
 </style>
@@ -445,12 +464,11 @@ footer .wrap { padding-block: 34px; display: flex; justify-content: space-betwee
   <!-- ===== BOOK ===== -->
   <section class="book" id="book">
     <div class="wrap">
-      <div>
+      <div class="book-intro">
         <p class="eyebrow" style="color: var(--red)">Let's talk</p>
         <h2 style="margin-top:14px">Book a night or a reel.</h2>
-        <p>Tell us what you have in mind and we'll get back to you with dates, themes and pricing.</p>
+        <p>Tap our email address and pick what you'd like to book. Your email app opens with a short request already started, so you only fill in the details.</p>
         <ul class="contact">
-          <li><span>Email</span><a href="mailto:jdtorres10@hotmail.com">jdtorres10@hotmail.com</a></li>
           <li><span>Call or text</span><a href="tel:+19567860575">(956) 786-0575</a></li>
           <li><span>Serving</span><b>Hampton Roads, Virginia</b></li>
         </ul>
@@ -460,22 +478,26 @@ footer .wrap { padding-block: 34px; display: flex; justify-content: space-betwee
           <a href="#" aria-label="YouTube (coming soon)" title="YouTube (coming soon)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.5 7.2a2.8 2.8 0 0 0-2-2C18.8 4.7 12 4.7 12 4.7s-6.8 0-8.5.5a2.8 2.8 0 0 0-2 2C1 8.9 1 12 1 12s0 3.1.5 4.8a2.8 2.8 0 0 0 2 2c1.7.5 8.5.5 8.5.5s6.8 0 8.5-.5a2.8 2.8 0 0 0 2-2c.5-1.7.5-4.8.5-4.8s0-3.1-.5-4.8zM9.8 15.2V8.8l5.7 3.2-5.7 3.2z"/></svg></a>
         </div>
       </div>
-      <form id="book-form">
-        <div class="form-row">
-          <label for="f-name">Name<input id="f-name" type="text" placeholder="Your name"></label>
-          <label for="f-email">Email<input id="f-email" type="email" placeholder="you@example.com"></label>
+      <div class="email-card">
+        <p class="email-label">Email us</p>
+        <div class="email-line">
+          <span class="point" aria-hidden="true">&#128073;</span>
+          <a class="email-btn" id="email-btn" href="mailto:jdtorres10@hotmail.com" aria-expanded="false" aria-controls="email-choices">jdtorres10@hotmail.com</a>
         </div>
-        <label for="f-service">I'm interested in
-          <select id="f-service">
-            <option>Music Bingo night</option>
-            <option>Sports highlight video</option>
-            <option>Both</option>
-          </select>
-        </label>
-        <label for="f-msg">Details<textarea id="f-msg" rows="4" placeholder="Venue, date, sport, theme ideas..."></textarea></label>
-        <button class="btn btn-red" type="submit" style="justify-self:start; border-color: var(--white); box-shadow: 5px 5px 0 var(--gold)">Send request</button>
-        <p class="form-note" id="form-note" aria-live="polite"></p>
-      </form>
+        <p class="email-hint" id="email-hint">Tap the email to start a request</p>
+        <div class="email-choices" id="email-choices" hidden>
+          <p class="choices-title">What would you like to book?</p>
+          <a class="choice bingo" href="mailto:jdtorres10@hotmail.com?subject=Music%20Bingo%20Night%20Request&amp;body=Hello%2C%20I%27m%20interested%20in%20having%20Torres%20Entertainment%20host%20a%20music%20bingo%20night%20at%20our%20%5Bfill%20in%20your%20event%20or%20venue%5D.%0D%0A%0D%0ADate%3A%0D%0ATime%3A%0D%0ALocation%3A%0D%0AExpected%20duration%3A%202%20hours%20%28typical%29%0D%0A%0D%0AThank%20you%2C%0D%0A%5BYour%20name%5D%0D%0A%5BYour%20phone%20number%5D">
+            <b>Music Bingo night</b>
+            <span>Venue, date, time, location and a 2-hour game</span>
+          </a>
+          <a class="choice hl" href="mailto:jdtorres10@hotmail.com?subject=Sports%20Highlight%20Video%20Request&amp;body=Hello%2C%20I%27m%20interested%20in%20having%20Torres%20Entertainment%20create%20a%20highlight%20video%20for%20my%20All-Star.%20He/she%20plays%20%5Bsport%2C%20team%20and%20position%5D.%0D%0A%0D%0ADate%3A%0D%0ATime%3A%0D%0ALocation%3A%0D%0A%0D%0AThank%20you%2C%0D%0A%5BYour%20name%5D%0D%0A%5BYour%20phone%20number%5D">
+            <b>Sports highlight video</b>
+            <span>Your All-Star's sport, plus the game date, time and location</span>
+          </a>
+          <a class="choice-plain" href="mailto:jdtorres10@hotmail.com">Or write your own email</a>
+        </div>
+      </div>
     </div>
   </section>
 </main>
@@ -515,9 +537,17 @@ footer .wrap { padding-block: 34px; display: flex; justify-content: space-betwee
   toggle.addEventListener('click', () => setMenu(!header.classList.contains('open')));
   document.querySelectorAll('#main-nav a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
 
-  document.getElementById('book-form').addEventListener('submit', (e) => {
+  // Clicking the email opens the request templates instead of a blank email
+  const emailBtn = document.getElementById('email-btn');
+  const choices = document.getElementById('email-choices');
+  const hint = document.getElementById('email-hint');
+  emailBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    document.getElementById('form-note').textContent = 'Mock-up only: this form is not connected yet.';
+    const open = choices.hidden;
+    choices.hidden = !open;
+    hint.hidden = open;
+    emailBtn.setAttribute('aria-expanded', open);
+    if (open) choices.querySelector('.choice').focus({ preventScroll: true });
   });
 </script>
 </body>
